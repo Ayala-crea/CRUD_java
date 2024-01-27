@@ -1,0 +1,678 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package jntpemrograman;
+
+import com.mysql.cj.jdbc.StatementImpl;
+import com.sun.jdi.connect.spi.Connection;
+import java.io.ObjectInputFilter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.ResultSetMetaData;
+import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
+
+/**
+ *
+ * @author SEKOLAH VOKASI
+ */
+public class FormPengecekanStok extends javax.swing.JFrame {
+
+    /**
+     * Creates new form FormPengecekanStok
+     */
+    public FormPengecekanStok() {
+        initComponents();
+        load_table();
+    }
+
+    private void load_table() {
+        // membuat tampilan model tabel
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("kode_barang");
+        model.addColumn("nama_barang");
+        model.addColumn("jenis_barang");
+        model.addColumn("satuan");
+        model.addColumn("Harga_net");
+        model.addColumn("tgl_masuk");
+        model.addColumn("tgl_keluar");
+        model.addColumn("total_masuk");
+        model.addColumn("total_keluar");
+        model.addColumn("sisa");
+
+        // menampilkan data database ke dalam tabel
+        try {
+            int no = 1;
+            String sql = "select * from stok_barang";
+            System.out.println("SQL Query: " + sql);
+
+            // Get the connection using your function
+            java.sql.Connection connection = function.configDB();
+            Statement stm = connection.createStatement();
+            ResultSet res = stm.executeQuery(sql);
+
+            // Get metadata to determine the number of columns
+            ResultSetMetaData metaData = res.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            while (res.next()) {
+                // Create an array to hold the values for each row
+                Object[] rowData = new Object[columnCount];
+                rowData[0] = no++;
+                for (int i = 1; i <= columnCount; i++) {
+                    rowData[i - 1] = res.getString(i);
+                }
+                model.addRow(rowData);
+            }
+
+            jTable2.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+//    public void update(String kodeBarang, String namaBarang, String jenisBarang, String satuan, String hargaNet,
+//            String tglMasuk, String tglKeluar, String totalMasuk, String totalKeluar, String sisa) {
+//        try {
+//            java.sql.Connection conn = (ConnectionImpl) function.configDB();
+//            query = "select * from barang where kode='" + txtkode.getText() + "'";
+//            stat = conn.createStatement();
+//            rs = stat.executeQuery(sql);
+//            while (rs.next()) {
+//                txtnama.setText(rs.getString("nama"));
+//                txtjenis.setText(rs.getString("jenis"));
+//                javax.swing.JOptionPane.showMessageDialog(null, "Data Ditemukan");
+//            }
+//        } catch (Exception e) {
+//        }
+//
+//        try {
+//            // Buat koneksi ke database
+//            java.sql.Connection conn = (ConnectionImpl) function.configDB();
+//
+//            String updateSql = "UPDATE stok_barang SET nama_barang = ?, jenis_barang = ?, satuan = ?, Harga_net = ?, "
+//                    + "tgl_masuk = ?, tgl_keluar = ?, tota_masuk = ?, total_keluar = ?, sisa = ? WHERE kode_barang = ?";
+//
+//            try (PreparedStatementWrapper pstmt = (PreparedStatementWrapper) conn.prepareStatement(updateSql)) {
+//                pstmt.setString(1, namaBarang);
+//                pstmt.setString(2, jenisBarang);
+//                pstmt.setString(3, satuan);
+//                pstmt.setString(4, hargaNet);
+//                pstmt.setString(5, tglMasuk);
+//                pstmt.setString(6, tglKeluar);
+//                pstmt.setString(7, totalMasuk);
+//                pstmt.setString(8, totalKeluar);
+//                pstmt.setString(9, sisa);
+//                pstmt.setString(10, kodeBarang);
+//
+//                int rowsUpdated = pstmt.executeUpdate();
+//
+//                if (rowsUpdated > 0) {
+//                    System.out.println("Data berhasil diupdate");
+//                } else {
+//                    System.out.println("Tidak ada data yang diupdate");
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+//    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        txtkode_barang = new javax.swing.JTextField();
+        txtnamabarang = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtharga = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        cmbjb = new javax.swing.JComboBox<>();
+        satuanspinner = new javax.swing.JSpinner();
+        total_masuk = new javax.swing.JSpinner();
+        total_keluarspinner = new javax.swing.JSpinner();
+        sisaspinner = new javax.swing.JSpinner();
+        tanggal_masuk = new com.toedter.calendar.JDateChooser();
+        tanggal_keluar = new com.toedter.calendar.JDateChooser();
+        Cari_data = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        cari_data = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("Form Pengecekan Stok ");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Kode barang", "Nama barang", "Jenis barang ", "Satuan", "Harga Net", "Tgl Masuk", "Tgl Keluar", "total masuk", "total keluar", "sisa"
+            }
+        ));
+        jTable2.setColumnSelectionAllowed(true);
+        jScrollPane2.setViewportView(jTable2);
+        jTable2.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        jButton1.setText("edit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("save");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("cancel");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("next");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        txtkode_barang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtkode_barangActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("kode barang");
+
+        jLabel3.setText("nama barang");
+
+        jLabel4.setText("jenis barang");
+
+        jLabel5.setText("satuan");
+
+        jLabel6.setText("Harga Net");
+
+        jLabel7.setText("Tanggal Masuk");
+
+        jLabel8.setText("Tanggal Keluar");
+
+        jLabel9.setText("Total Masuk");
+
+        jLabel10.setText("Total Keluar");
+
+        jLabel11.setText("Sisa");
+
+        cmbjb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- PILIH -", "Makanan", "Minuman", "ROKO" }));
+        cmbjb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbjbActionPerformed(evt);
+            }
+        });
+
+        Cari_data.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Cari_dataActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("Cari");
+
+        cari_data.setText("cari");
+        cari_data.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cari_dataActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(258, 258, 258)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 796, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Cari_data, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cari_data, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel9))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtkode_barang, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(txtnamabarang)
+                                    .addComponent(cmbjb, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(39, 39, 39)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel5)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                            .addComponent(total_masuk, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtharga, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(satuanspinner, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tanggal_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(sisaspinner)
+                                    .addComponent(total_keluarspinner)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tanggal_keluar, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap(107, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(Cari_data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(cari_data))
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtkode_barang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel11)
+                    .addComponent(satuanspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sisaspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
+                        .addComponent(total_keluarspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtnamabarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel6)
+                        .addComponent(txtharga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel7)
+                        .addComponent(cmbjb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tanggal_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(total_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9))
+                    .addComponent(tanggal_keluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(255, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            java.sql.Connection connection = function.configDB();
+            String sql = "UPDATE stok_barang SET "
+                    + "nama_barang='" + txtnamabarang.getText() + "', "
+                    + "jenis_barang='" + cmbjb.getSelectedItem().toString() + "', "
+                    + "total_masuk='" + ((SpinnerNumberModel) this.total_masuk.getModel()).getNumber().toString() + "', "
+                    + "satuan='" + ((SpinnerNumberModel) this.satuanspinner.getModel()).getNumber().toString() + "', "
+                    + "Harga_net='" + txtharga.getText() + "', "
+                    + "tgl_masuk='" + new SimpleDateFormat("yyyy-MM-dd").format(tanggal_masuk.getDate()) + "', "
+                    + "tgl_keluar='" + new SimpleDateFormat("yyyy-MM-dd").format(tanggal_keluar.getDate()) + "', "
+                    + "sisa='" + ((SpinnerNumberModel) this.sisaspinner.getModel()).getNumber().toString() + "', "
+                    + "total_keluar='" + ((SpinnerNumberModel) this.total_keluarspinner.getModel()).getNumber().toString() + "' "
+                    + "WHERE kode_barang='" + txtkode_barang.getText() + "'";
+            java.sql.PreparedStatement pst = connection.prepareStatement(sql);
+            int rowsUpdated = pst.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Data Berhasil di update");
+                load_table();
+
+                // Clear form fields
+                txtkode_barang.setText("");
+                txtnamabarang.setText("");
+                cmbjb.setSelectedIndex(0);  // Set to the default index or whatever makes sense for your case
+                total_masuk.setValue(0);    // Assuming total_masuk is a JSpinner, set to the default value
+                satuanspinner.setValue(0);  // Set to the default value or whatever makes sense
+                txtharga.setText("");
+                tanggal_masuk.setDate(null); // Clear the date
+                tanggal_keluar.setDate(null); // Clear the date
+                sisaspinner.setValue(0);    // Set to the default value or whatever makes sense
+                total_keluarspinner.setValue(0);
+            } else {
+                JOptionPane.showMessageDialog(null, "Proses Edit Gagal");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Proses Edit Gagal");
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String kode_barang = txtkode_barang.getText();
+        String nama_barang = txtnamabarang.getText();
+        String jb = (String) cmbjb.getSelectedItem();
+        String total_masuk = ((SpinnerNumberModel) this.total_masuk.getModel()).getNumber().toString();
+        String satuan = ((SpinnerNumberModel) this.satuanspinner.getModel()).getNumber().toString();
+        String Harga_net = txtharga.getText();
+        java.util.Date selectedDate = tanggal_masuk.getDate();
+        String tanggal_masuk_str = new SimpleDateFormat("yyyy-MM-dd").format(selectedDate);
+        java.util.Date date_out = tanggal_keluar.getDate();
+        String tanggal_keluar_str = new SimpleDateFormat("yyyy-MM-dd").format(date_out);
+        String sisa_barang = ((SpinnerNumberModel) this.sisaspinner.getModel()).getNumber().toString();
+        String total_keluar = ((SpinnerNumberModel) this.total_keluarspinner.getModel()).getNumber().toString();
+
+        try {
+            java.sql.Connection connection = function.configDB();
+            String insertQuery = "INSERT INTO stok_barang (kode_barang, nama_barang, jenis_barang, total_masuk, satuan, Harga_net, tgl_masuk, tgl_keluar, sisa, total_keluar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            try (var pstmt = connection.prepareStatement(insertQuery)) {
+                pstmt.setString(1, kode_barang);
+                pstmt.setString(2, nama_barang);
+                pstmt.setString(3, jb);
+                pstmt.setString(4, total_masuk);
+                pstmt.setString(5, satuan);
+                pstmt.setString(6, Harga_net);
+                pstmt.setString(7, tanggal_masuk_str);
+                pstmt.setString(8, tanggal_keluar_str);
+                pstmt.setString(9, sisa_barang);
+                pstmt.setString(10, total_keluar);
+
+                int rowsInserted = pstmt.executeUpdate();
+
+                if (rowsInserted > 0) {
+                    System.out.println("Data inserted successfully!");
+                    load_table();
+
+                    txtkode_barang.setText("");
+                    txtnamabarang.setText("");
+                    cmbjb.setSelectedIndex(0); // Ganti dengan nilai default jika ada
+                    // Reset nilai-nilai untuk elemen-elemen form lainnya
+
+                    // Selain itu, jika menggunakan spinner, Anda dapat mereset nilainya seperti ini:
+                    this.total_masuk.setValue(0);
+                    this.satuanspinner.setValue(0);
+                    this.sisaspinner.setValue(0);
+                    this.total_keluarspinner.setValue(0);
+                } else {
+                    System.out.println("Failed to insert data.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        DASHBOARD dashboard = new DASHBOARD();
+        dashboard.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtkode_barangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtkode_barangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtkode_barangActionPerformed
+
+    private void cmbjbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbjbActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbjbActionPerformed
+
+    private void Cari_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cari_dataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Cari_dataActionPerformed
+
+    private void cari_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cari_dataActionPerformed
+        try {
+            java.sql.Connection connection = function.configDB();
+            String sql = "SELECT * FROM stok_barang WHERE kode_barang=? OR nama_barang=?";
+            java.sql.PreparedStatement pst = connection.prepareStatement(sql);
+
+            // Ganti sesuai dengan jenis data kolom kode_barang dan nama_barang pada tabel
+            pst.setString(1, Cari_data.getText());
+            pst.setString(2, Cari_data.getText());
+
+            ResultSet rs = pst.executeQuery();
+
+            // Jika data ditemukan, tampilkan ke dalam teks field
+            if (rs.next()) {
+                txtkode_barang.setText(rs.getString("kode_barang"));
+                txtnamabarang.setText(rs.getString("nama_barang"));
+                cmbjb.setSelectedItem(rs.getString("jenis_barang"));
+                double satuanModel = Double.parseDouble(rs.getString("satuan"));
+                satuanspinner.setValue(satuanModel);
+                double totalMasukValue = Double.parseDouble(rs.getString("total_masuk"));
+                total_masuk.setValue(totalMasukValue);
+                txtharga.setText(rs.getString("Harga_net"));
+                tanggal_masuk.setDate(rs.getDate("tgl_masuk"));
+                tanggal_keluar.setDate(rs.getDate("tgl_keluar"));
+                double sisa = Double.parseDouble(rs.getString("sisa"));
+                sisaspinner.setValue(sisa);
+                double total_keluar = Double.parseDouble(rs.getString("total_keluar"));
+                total_keluarspinner.setValue(total_keluar);
+                // Lanjutkan untuk teks field lainnya sesuai dengan kolom pada tabel
+                // ...
+
+                // Anda juga dapat menampilkan data di tabel jika perlu
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("kode_barang");
+                model.addColumn("nama_barang");
+                model.addColumn("jenis_barang");
+                model.addColumn("satuan");
+                model.addColumn("Harga_net");
+                model.addColumn("tgl_masuk");
+                model.addColumn("tgl_keluar");
+                model.addColumn("total_masuk");
+                model.addColumn("total_keluar");
+                model.addColumn("sisa");
+
+                // Isi data hasil pencarian ke dalam model tabel
+                Object[] rowData = new Object[]{
+                    rs.getString("kode_barang"),
+                    rs.getString("nama_barang"),
+                    rs.getString("jenis_barang"),
+                    rs.getString("satuan"),
+                    rs.getString("Harga_net"),
+                    rs.getString("tgl_masuk"),
+                    rs.getString("tgl_keluar"),
+                    rs.getString("total_masuk"),
+                    rs.getString("total_keluar"),
+                    rs.getString("sisa")
+                };
+                model.addRow(rowData);
+
+                // Tampilkan model tabel ke dalam JTable
+                jTable2.setModel(model);
+            } else {
+                // Jika data tidak ditemukan, kosongkan teks field dan tabel
+                txtkode_barang.setText("");
+                txtnamabarang.setText("");
+                cmbjb.setSelectedIndex(0);
+                total_masuk.setValue("");
+                satuanspinner.setValue("");
+
+                // Pilih indeks 0 atau sesuaikan
+                // Lanjutkan untuk teks field lainnya sesuai dengan kolom pada tabel
+                // ...
+                jTable2.setModel(new DefaultTableModel());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_cari_dataActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        OrderManagementForm ordermanagement = new OrderManagementForm();
+        ordermanagement.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FormPengecekanStok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FormPengecekanStok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FormPengecekanStok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FormPengecekanStok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FormPengecekanStok().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Cari_data;
+    private javax.swing.JButton cari_data;
+    private javax.swing.JComboBox<String> cmbjb;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JSpinner satuanspinner;
+    private javax.swing.JSpinner sisaspinner;
+    private com.toedter.calendar.JDateChooser tanggal_keluar;
+    private com.toedter.calendar.JDateChooser tanggal_masuk;
+    private javax.swing.JSpinner total_keluarspinner;
+    private javax.swing.JSpinner total_masuk;
+    private javax.swing.JTextField txtharga;
+    private javax.swing.JTextField txtkode_barang;
+    private javax.swing.JTextField txtnamabarang;
+    // End of variables declaration//GEN-END:variables
+}
